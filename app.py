@@ -27,6 +27,13 @@ APP_CATALOG = {
         'badge': 'Available now',
         'url': '/tasks',
     },
+    'contacts': {
+        'slug': 'contacts',
+        'title': 'Contacts',
+        'description': 'Review Microsoft 365 contacts, merge duplicates, and step through cleanup with hotkeys.',
+        'badge': 'Available now',
+        'url': '/contacts',
+    },
     'translate': {
         'slug': 'translate',
         'title': 'Translator',

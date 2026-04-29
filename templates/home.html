@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cambridge Picture Apps</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="shell">
+    <section class="hero">
+      <div class="hero-bar">
+        <div>
+          <p class="eyebrow">Cambridge Picture</p>
+          <h1>Welcome back</h1>
+          <p class="lede">
+            {% if user.is_admin %}
+              You are signed in as an admin. You can launch apps, manage users, and assign app access.
+            {% else %}
+              You are signed in as {{ user.email }}. Choose one of the apps available to you below.
+            {% endif %}
+          </p>
+        </div>
+        <div class="hero-actions">
+          {% if user.is_admin %}<a class="logout-link" href="{{ url_for('admin_dashboard') }}">Admin</a>{% endif %}
+          <a class="logout-link" href="{{ url_for('logout') }}">Log out</a>
+        </div>
+      </div>
+    </section>
+    <section class="card">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <div class="messages">
+            {% for category, message in messages %}
+              <div class="message message-{{ category }}">{{ message }}</div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+      {% if user %}
+        <div class="app-grid">
+          {% for app in apps %}
+            <a class="app-card" href="{{ app.url }}">
+              <span class="app-badge">{{ app.badge }}</span>
+              <h3>{{ app.title }}</h3>
+              <p>{{ app.description }}</p>
+            </a>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="shell">
+    <section class="hero">
+      <div class="hero-bar">
+        <div>
+          <p class="eyebrow">Admin dashboard</p>
+          <h1>User access</h1>
+          <p class="lede">Manage accounts and assign apps. Users only see the apps you grant them.</p>
+        </div>
+        <div class="hero-actions">
+          <a class="logout-link" href="{{ url_for('home') }}">Home</a>
+          <a class="logout-link" href="{{ url_for('logout') }}">Log out</a>
+        </div>
+      </div>
+    </section>
+    <section class="card card-spaced">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <div class="messages">
+            {% for category, message in messages %}
+              <div class="message message-{{ category }}">{{ message }}</div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+      <form class="admin-form" action="{{ url_for('create_user') }}" method="post">
+        <label class="field"><span>Email</span><input type="email" name="email" required></label>
+        <label class="field"><span>Initial password</span><input type="password" name="password" required></label>
+        <label class="checkbox-row"><input type="checkbox" name="is_admin"><span>Admin user</span></label>
+        <div class="checkbox-grid">
+          {% for app in available_apps %}
+            <label class="checkbox-row"><input type="checkbox" name="allowed_apps" value="{{ app.slug }}" checked><span>{{ app.title }}</span></label>
+          {% endfor %}
+        </div>
+        <button type="submit">Add user</button>
+      </form>
+    </section>
+    <section class="card card-spaced">
+      <div class="admin-list">
+        {% for item in users %}
+          <article class="admin-user">
+            <div class="admin-user-head">
+              <div>
+                <h3>{{ item.email }}</h3>
+                <p class="notes">{% if item.is_admin %}Admin{% else %}Standard user{% endif %}{% if item.allowed_apps %} · {{ item.allowed_apps | join(', ') }}{% else %} · No apps assigned{% endif %}</p>
+              </div>
+              <p class="notes mono">ID {{ item.user_id }}</p>
+            </div>
+            <form class="admin-form admin-form-inline" action="{{ url_for('update_user', user_id=item.user_id) }}" method="post">
+              <label class="field"><span>Email</span><input type="email" name="email" value="{{ item.email }}" required></label>
+              <label class="field"><span>Reset password</span><input type="password" name="password" placeholder="Leave blank to keep current password"></label>
+              <label class="checkbox-row"><input type="checkbox" name="is_admin" {% if item.is_admin %}checked{% endif %}><span>Admin user</span></label>
+              <div class="checkbox-grid">
+                {% for app in available_apps %}
+                  <label class="checkbox-row"><input type="checkbox" name="allowed_apps" value="{{ app.slug }}" {% if app.slug in item.allowed_apps %}checked{% endif %}><span>{{ app.title }}</span></label>
+                {% endfor %}
+              </div>
+              <button type="submit">Save changes</button>
+            </form>
+          </article>
+        {% endfor %}
+      </div>
+    </section>
+  </main>
+</body>
+</html>

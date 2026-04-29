@@ -7,6 +7,17 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+  {% set portal_primary_links = [{'label': 'Admin', 'href': url_for('admin_dashboard')}] if user.is_admin else [] %}
+  {{ render_shared_header(
+    app_name="Portal",
+    home_href=url_for('home'),
+    primary_links=portal_primary_links,
+    current_user=current_user,
+    auth_enabled=shared_auth_enabled,
+    user_menu_items=[
+      {'label': 'Log out', 'href': url_for('logout')},
+    ],
+  ) }}
   <main class="shell">
     <section class="hero">
       <div class="hero-bar">
@@ -20,10 +31,6 @@
               You are signed in as {{ user.email }}. Choose one of the apps available to you below.
             {% endif %}
           </p>
-        </div>
-        <div class="hero-actions">
-          {% if user.is_admin %}<a class="logout-link" href="{{ url_for('admin_dashboard') }}">Admin</a>{% endif %}
-          <a class="logout-link" href="{{ url_for('logout') }}">Log out</a>
         </div>
       </div>
     </section>

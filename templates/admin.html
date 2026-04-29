@@ -7,6 +7,16 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+  {{ render_shared_header(
+    app_name="Portal",
+    home_href=url_for('home'),
+    primary_links=[],
+    current_user=current_user,
+    auth_enabled=shared_auth_enabled,
+    user_menu_items=[
+      {'label': 'Log out', 'href': url_for('logout')},
+    ],
+  ) }}
   <main class="shell">
     <section class="hero">
       <div class="hero-bar">
@@ -14,10 +24,6 @@
           <p class="eyebrow">Admin dashboard</p>
           <h1>User access</h1>
           <p class="lede">Manage accounts and assign apps. Users only see the apps you grant them.</p>
-        </div>
-        <div class="hero-actions">
-          <a class="logout-link" href="{{ url_for('home') }}">Home</a>
-          <a class="logout-link" href="{{ url_for('logout') }}">Log out</a>
         </div>
       </div>
     </section>

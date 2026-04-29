@@ -3,6 +3,7 @@ from werkzeug.middleware.proxy_fix import ProxyFix
 
 from config import LOGIN_PASSWORD, LOGIN_USERNAME, SECRET_KEY, STATIC_URL_PATH
 from shared.auth import current_user, get_user_store, require_admin, require_login, visible_apps_for_user
+from shared import install_shared_header
 
 APP_CATALOG = {
     'contracts': {
@@ -40,6 +41,7 @@ def create_app() -> Flask:
     app = Flask(__name__, template_folder='templates', static_folder='static', static_url_path=STATIC_URL_PATH)
     app.config.update(SECRET_KEY=SECRET_KEY, PREFERRED_URL_SCHEME='https')
     app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_port=1, x_prefix=1)
+    install_shared_header(app, auth_enabled=True)
 
     user_store = get_user_store()
     if user_store.count_users() == 0 and LOGIN_USERNAME and LOGIN_PASSWORD:
@@ -48,6 +50,13 @@ def create_app() -> Flask:
     @app.before_request
     def load_current_user():
         current_user()
+
+    @app.context_processor
+    def inject_shared_context():
+        return {
+            "current_user": current_user(),
+            "shared_auth_enabled": True,
+        }
 
     @app.get('/')
     @require_login

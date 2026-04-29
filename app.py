@@ -29,7 +29,7 @@ APP_CATALOG = {
     },
     'translate': {
         'slug': 'translate',
-        'title': 'Translate App',
+        'title': 'Translator',
         'description': 'Upload DOCX files and generate bilingual or Chinese-only outputs.',
         'badge': 'Available now',
         'url': '/translate',

@@ -7,17 +7,21 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-  {{ render_shared_header(
-    app_name="Portal",
-    home_href=url_for('home'),
-    primary_links=[],
-    current_user=current_user,
-    auth_enabled=shared_auth_enabled,
-    user_menu_items=[
-      {'label': 'Log out', 'href': url_for('logout')},
-    ],
-  ) }}
-  <main class="shell">
+  <div class="app-frame">
+    <div class="header-shell">
+      {{ render_shared_header(
+        app_name="Portal",
+        portal_home_href="/",
+        admin_href=url_for('admin_dashboard'),
+        primary_links=[],
+        current_user=current_user,
+        auth_enabled=shared_auth_enabled,
+        user_menu_items=[
+          {'label': 'Log out', 'href': url_for('logout')},
+        ],
+      ) }}
+    </div>
+    <main class="shell">
     <section class="hero">
       <div class="hero-bar">
         <div>
@@ -75,6 +79,7 @@
         {% endfor %}
       </div>
     </section>
-  </main>
+    </main>
+  </div>
 </body>
 </html>

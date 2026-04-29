@@ -7,13 +7,16 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-  {{ render_shared_header(
-    app_name="Portal",
-    home_href=url_for('login'),
-    current_user=current_user,
-    auth_enabled=shared_auth_enabled,
-  ) }}
-  <main class="shell shell-narrow">
+  <div class="app-frame">
+    <div class="header-shell">
+      {{ render_shared_header(
+        app_name="Portal",
+        portal_home_href="/",
+        current_user=current_user,
+        auth_enabled=shared_auth_enabled,
+      ) }}
+    </div>
+    <main class="shell shell-narrow">
     <section class="hero">
       <p class="eyebrow">Secure access</p>
       <h1>Sign in to continue</h1>
@@ -36,6 +39,7 @@
         <button type="submit">Log in</button>
       </form>
     </section>
-  </main>
+    </main>
+  </div>
 </body>
 </html>

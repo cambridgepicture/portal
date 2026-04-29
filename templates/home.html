@@ -7,34 +7,23 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-  {% set portal_primary_links = [{'label': 'Admin', 'href': url_for('admin_dashboard')}] if user.is_admin else [] %}
-  {{ render_shared_header(
-    app_name="Portal",
-    home_href=url_for('home'),
-    primary_links=portal_primary_links,
-    current_user=current_user,
-    auth_enabled=shared_auth_enabled,
-    user_menu_items=[
-      {'label': 'Log out', 'href': url_for('logout')},
-    ],
-  ) }}
-  <main class="shell">
-    <section class="hero">
-      <div class="hero-bar">
-        <div>
-          <p class="eyebrow">Cambridge Picture</p>
-          <h1>Welcome back</h1>
-          <p class="lede">
-            {% if user.is_admin %}
-              You are signed in as an admin. You can launch apps, manage users, and assign app access.
-            {% else %}
-              You are signed in as {{ user.email }}. Choose one of the apps available to you below.
-            {% endif %}
-          </p>
-        </div>
-      </div>
-    </section>
-    <section class="card">
+  <div class="app-frame">
+    <div class="header-shell">
+    {% set portal_primary_links = [] %}
+    {{ render_shared_header(
+      app_name="Web Apps",
+      portal_home_href="/",
+      admin_href=url_for('admin_dashboard') if user.is_admin else None,
+      primary_links=portal_primary_links,
+      current_user=current_user,
+      auth_enabled=shared_auth_enabled,
+      user_menu_items=[
+        {'label': 'Log out', 'href': url_for('logout')},
+      ],
+    ) }}
+    </div>
+    <main class="shell">
+    <section class="card portal-launch-card">
       {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
           <div class="messages">
@@ -47,15 +36,15 @@
       {% if user %}
         <div class="app-grid">
           {% for app in apps %}
-            <a class="app-card" href="{{ app.url }}">
-              <span class="app-badge">{{ app.badge }}</span>
+            <a class="app-card" href="{{ app.url }}" title="{{ app.description }}" aria-label="{{ app.title }}. {{ app.description }}">
               <h3>{{ app.title }}</h3>
-              <p>{{ app.description }}</p>
+              <span class="sr-only">{{ app.description }}</span>
             </a>
           {% endfor %}
         </div>
       {% endif %}
     </section>
-  </main>
+    </main>
+  </div>
 </body>
 </html>

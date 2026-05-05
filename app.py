@@ -34,6 +34,13 @@ APP_CATALOG = {
         'badge': 'Available now',
         'url': '/contacts',
     },
+    'emails': {
+        'slug': 'emails',
+        'title': 'Emails',
+        'description': 'Classify Microsoft 365 email, manage local rules, and learn from corrections.',
+        'badge': 'Available now',
+        'url': '/emails',
+    },
     'translate': {
         'slug': 'translate',
         'title': 'Translator',

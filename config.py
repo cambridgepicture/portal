@@ -12,5 +12,5 @@ BASE_DIR = str(BASE_PATH)
 SECRET_KEY = os.getenv('SECRET_KEY', 'change-me-in-production')
 STATIC_URL_PATH = '/static'
 USER_DB_PATH = str(BASE_PATH / 'data' / '.user_store.sqlite3')
-LOGIN_USERNAME = os.getenv('LOGIN_USERNAME', 'ivan@cambridgepicture.com')
-LOGIN_PASSWORD = os.getenv('LOGIN_PASSWORD', 'replace-with-your-password')
+LOGIN_USERNAME = os.getenv('LOGIN_USERNAME', 'admin')
+LOGIN_PASSWORD = os.getenv('LOGIN_PASSWORD', 'admin')

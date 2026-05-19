@@ -48,6 +48,15 @@ button:hover, .button-link:hover, .logout-link:hover { filter: brightness(1.04);
 .message { padding: 0.9rem 1rem; border-radius: 14px; font-family: system-ui, sans-serif; }
 .message-error { color: #7f1d1d; background: #fee2e2; border: 1px solid #fecaca; }
 .message-message { color: #14532d; background: #dcfce7; border: 1px solid #bbf7d0; }
+.portal-warning {
+  margin-bottom: 1rem;
+  padding: 0.95rem 1rem;
+  border-radius: 14px;
+  border: 1px solid #f59e0b;
+  background: #fffbeb;
+  color: #92400e;
+  font: 600 0.95rem/1.6 system-ui, sans-serif;
+}
 .app-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.75rem; }
 .portal-launch-card {
   width: 100%;

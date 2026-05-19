@@ -23,6 +23,11 @@
       <p class="lede">Enter your email address and password to continue.</p>
     </section>
     <section class="card">
+      {% if seed_login_is_default %}
+        <div class="portal-warning">
+          The portal is using the generic seed login `admin` / `admin`. Please change these values before relying on this environment.
+        </div>
+      {% endif %}
       {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
           <div class="messages">

@@ -70,6 +70,7 @@ def create_app() -> Flask:
         return {
             "current_user": current_user(),
             "shared_auth_enabled": True,
+            "seed_login_is_default": LOGIN_USERNAME == "admin" and LOGIN_PASSWORD == "admin",
         }
 
     @app.get('/')

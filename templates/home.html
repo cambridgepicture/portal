@@ -24,6 +24,11 @@
     </div>
     <main class="shell">
     <section class="card portal-launch-card">
+      {% if seed_login_is_default %}
+        <div class="portal-warning">
+          The portal is using the generic seed login `admin` / `admin`. Please change these values before relying on this environment.
+        </div>
+      {% endif %}
       {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
           <div class="messages">
